@@ -29,6 +29,7 @@ export class ClientsService {
     @Inject('axios') private readonly axios: AxiosStatic,
     @Inject('interceptors') private readonly interceptors: any,
   ) {
+    // Interceptors can be added in constructor
     this.interceptors.addHeader(this.clients.postsClient);
     this.interceptors.addHeader(this.clients.uploadClient);
     this.interceptors.changeData(this.clients.postsClient);
@@ -48,6 +49,7 @@ export class ClientsService {
 
   mediaAPI = {
     foo: () => {
+      // Interceptors can be added in methods
       this.interceptors.addHeader(this.clients.mediaClient);
       this.interceptors.changeData(this.clients.mediaClient);
       return this.clients.mediaClient.get('/bar');
