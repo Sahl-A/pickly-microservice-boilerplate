@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { ClientsService } from 'src/clients/clients.service';
 
 @Injectable()
-export class ServiceService {
+export class ModuleexampleService {
   private readonly _counter: CounterMetric;
   private readonly _histogram: HistogramMetric;
   constructor(

@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ServiceService } from './moduleExample.service';
-import { ServiceController } from './moduleExample.controller';
+import { ModuleexampleService } from './moduleExample.service';
+import { ModuleExampleContoller } from './moduleExample.controller';
 import { ClientsModule } from 'src/clients/clients.module';
+
 // import { TypeOrmModule } from '@nestjs/typeorm';
 // import { ServiceRepository } from './entities/serviceRepository';
 
@@ -10,7 +11,7 @@ import { ClientsModule } from 'src/clients/clients.module';
     ClientsModule,
     // TypeOrmModule.forFeature([ServiceRepository]),
   ],
-  controllers: [ServiceController],
-  providers: [ServiceService],
+  controllers: [ModuleExampleContoller],
+  providers: [ModuleexampleService],
 })
-export class ServiceModule {}
+export class ModuleExampleModule {}
