@@ -1,12 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ClientsService } from './clients.service';
 import { ConfigService } from '@nestjs/config';
-import axios from 'axios';
-
-jest.mock('axios', () => ({
-  create: jest.fn().mockReturnValue('axios-instance'),
-}));
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+// @ts-expect-error-importing from manually mocked axios
+// but ts compiler checks for mockAxiosInstance in actual axios
+import axios, { mockAxiosInstance } from 'axios';
 
 const mockConfigService = {
   get: jest.fn().mockReturnValue({
@@ -36,7 +33,7 @@ describe('ClientsService', () => {
         },
         {
           provide: 'axios',
-          useValue: mockedAxios,
+          useValue: axios,
         },
         {
           provide: 'interceptors',
@@ -55,17 +52,68 @@ describe('ClientsService', () => {
   describe('Clients', () => {
     describe('Posts', () => {
       it('should be axios instance', () => {
-        expect(clientsService['clients'].postsClient).toBe('axios-instance');
+        const client = clientsService['clients'].postsClient;
+        expect(client).toEqual(mockAxiosInstance);
+      });
+    });
+    describe('Notifications', () => {
+      it('should be axios instance', () => {
+        const client = clientsService['clients'].notificationsClient;
+        expect(client).toEqual(mockAxiosInstance);
+      });
+    });
+    describe('Upload', () => {
+      it('should be axios instance', () => {
+        const client = clientsService['clients'].uploadClient;
+        expect(client).toEqual(mockAxiosInstance);
+      });
+    });
+    describe('Media', () => {
+      it('should be axios instance', () => {
+        const client = clientsService['clients'].mediaClient;
+        expect(client).toEqual(mockAxiosInstance);
       });
     });
   });
 
-  // describe("API's", () => {
-  //   describe('Posts', () => {
-  //     it('');
-  //   });
-  // describe('Notifications', () => {});
-  // describe('Media', () => {});
-  // describe('Upload', () => {});
-  // });
+  describe("API's", () => {
+    describe('Posts', () => {
+      describe('foo', () => {
+        it('should return with axios (get) response', () => {
+          const response = clientsService.postsAPI.foo();
+          expect(response).toEqual('axios-get-promise');
+        });
+      });
+    });
+    describe('Notifications', () => {
+      describe('foo', () => {
+        it('should return with axios (get) response', () => {
+          const response = clientsService.notificationsAPI.foo();
+          expect(response).toEqual('axios-get-promise');
+        });
+      });
+      describe('bar', () => {
+        it('should return with axios (post) response', () => {
+          const response = clientsService.notificationsAPI.bar();
+          expect(response).toEqual('axios-post-promise');
+        });
+      });
+    });
+    describe('Upload', () => {
+      describe('bar', () => {
+        it('should return with axios (post) response', () => {
+          const response = clientsService.uploadAPI.foo();
+          expect(response).toEqual('axios-post-promise');
+        });
+      });
+    });
+    describe('Media', () => {
+      describe('foo', () => {
+        it('should return with axios (get) response', () => {
+          const response = clientsService.mediaAPI.foo();
+          expect(response).toEqual('axios-get-promise');
+        });
+      });
+    });
+  });
 });

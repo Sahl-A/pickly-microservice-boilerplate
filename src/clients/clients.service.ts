@@ -36,8 +36,17 @@ export class ClientsService {
   }
 
   postsAPI = {
-    foo: async () => {
+    foo: () => {
       return this.clients.postsClient.get('/bar');
+    },
+  };
+
+  notificationsAPI = {
+    foo: () => {
+      return this.clients.postsClient.get('/bar');
+    },
+    bar: () => {
+      return this.clients.uploadClient.post('/bar', { foo: 'bar' });
     },
   };
 
