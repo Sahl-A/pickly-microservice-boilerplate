@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ClientsService } from './clients.service';
 import { ConfigService } from '@nestjs/config';
-// @ts-expect-error-importing from manually mocked axios
-// but ts compiler checks for mockAxiosInstance in actual axios
+
+// @ts-expect-error: importing from manually mocked axios
+// but ts compiler checks for mockAxiosInstance in actual axios module
 import axios, { mockAxiosInstance } from 'axios';
 
 const mockConfigService = {
